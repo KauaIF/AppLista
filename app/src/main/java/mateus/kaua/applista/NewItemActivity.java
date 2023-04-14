@@ -12,3 +12,4 @@ public class NewItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_item);
     }
 }
+//TODO: passo 5 feito
