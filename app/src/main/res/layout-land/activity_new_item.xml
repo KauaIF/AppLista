@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.NewItemActivity">
+    tools:context=".activity.activity.NewItemActivity">
 
     <ImageView
         android:id="@+id/imvPhotoPreview"
@@ -17,7 +17,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageButton
-        android:id="@+id/imbCl"
+        android:id="@+id/imbCI"
         android:layout_width="35dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

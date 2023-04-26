@@ -1,4 +1,4 @@
-package mateus.kaua.applista.activity;
+package mateus.kaua.applista.activity.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*Passo 7 - Navegação Para Uma Activity com Retorno de Resultado*/
         FloatingActionButton fabAddItem = findViewById(R.id.fabAddNewItem);
         fabAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
