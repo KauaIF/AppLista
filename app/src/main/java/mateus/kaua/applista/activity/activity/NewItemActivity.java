@@ -79,5 +79,3 @@ public class NewItemActivity extends AppCompatActivity {
         }
     }
 }
-
-//TODO: passo 8 feito

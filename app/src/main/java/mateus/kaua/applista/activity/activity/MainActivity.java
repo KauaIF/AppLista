@@ -1,17 +1,28 @@
 package mateus.kaua.applista.activity.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mateus.kaua.applista.R;
+import mateus.kaua.applista.activity.adapter.MyAdapter;
+import mateus.kaua.applista.activity.model.MyItem;
 
 public class MainActivity extends AppCompatActivity {
     static int NEW_ITEM_REQUEST=1;
+    List<MyItem> itens = new ArrayList<>();
+    MyAdapter myAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,5 +36,33 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(i,NEW_ITEM_REQUEST);
             }
         });
+        /*passo 12*/
+
+        RecyclerView rvItens = findViewById(R.id.rvItens);
+        myAdapter = new MyAdapter(this,itens);
+        rvItens.setAdapter(myAdapter);
+        rvItens.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvItens.getContext(),DividerItemDecoration.VERTICAL);
+        rvItens.addItemDecoration(dividerItemDecoration);
+    }
+
+    /* Passo 11:
+    validamos o request, caso validado a instancia myItem recebe os dados e é adicionada a lista*/
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if (requestCode==NEW_ITEM_REQUEST){
+            if (resultCode==RESULT_OK){
+                MyItem myItem = new MyItem();
+                myItem.title = data.getStringExtra("title");
+                myItem.description = data.getStringExtra("description");
+                myItem.photo = data.getData();
+                itens.add(myItem);
+                itens.add(myItem);
+                myAdapter.notifyItemInserted(itens.size()-1);
+            }
+        }
     }
 }
