@@ -29,7 +29,7 @@ import mateus.kaua.applista.activity.util.Util;
 public class MainActivity extends AppCompatActivity {
     static int NEW_ITEM_REQUEST=1;
     MyAdapter myAdapter;
-    List<MyItem> itens = new ArrayList<>();
+    /*List<MyItem> itens = new ArrayList<>();*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         rvItens.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        rvItens.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvItens.getContext(),DividerItemDecoration.VERTICAL);
         rvItens.addItemDecoration(dividerItemDecoration);
     }
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
-                List<MyItem> items = vm.getItens();
+                List<MyItem> itens = vm.getItens();
                 itens.add(myItem);
                 myAdapter.notifyItemInserted(itens.size()-1);
             }

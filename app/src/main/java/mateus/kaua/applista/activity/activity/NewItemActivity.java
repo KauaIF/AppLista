@@ -22,7 +22,7 @@ import mateus.kaua.applista.activity.model.NewItemActivityViewModel;
 public class NewItemActivity extends AppCompatActivity {
 
     static int PHOTO_PICKER_REQUEST = 1;
-    Uri photoSelected = null;
+    /*Uri photoSelected = null;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,9 @@ public class NewItemActivity extends AppCompatActivity {
         btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (photoSelected==null){
+                NewItemActivityViewModel vm = new ViewModelProvider(NewItemActivity.this).get(NewItemActivityViewModel.class);
+                Uri selectPhotoLocation = vm.getSelectedPhotoLocation();
+                if (selectPhotoLocation==null){
                     Toast.makeText(NewItemActivity.this, "É necessário selecionar uma imagem", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -66,7 +68,7 @@ public class NewItemActivity extends AppCompatActivity {
                     return;
                 }
                 Intent i = new Intent();
-                i.setData(photoSelected);
+                i.setData(selectPhotoLocation);
                 i.putExtra("title",title);
                 i.putExtra("description",description);
                 setResult(Activity.RESULT_OK,i);
