@@ -42,8 +42,8 @@ public class MyAdapter extends RecyclerView.Adapter {
         TextView tvTitle = v.findViewById(R.id.tvTitle);
         tvTitle.setText(myItem.title);
 
-        TextView tvDessc = v.findViewById(R.id.tvDesc);
-        tvDessc.setText(myItem.description);
+        TextView tvDesc = v.findViewById(R.id.tvDesc);
+        tvDesc.setText(myItem.description);
     }
 
     @Override

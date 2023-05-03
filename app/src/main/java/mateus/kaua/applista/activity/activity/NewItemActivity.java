@@ -2,6 +2,7 @@ package mateus.kaua.applista.activity.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import mateus.kaua.applista.R;
+import mateus.kaua.applista.activity.model.MainActivityViewModel;
+import mateus.kaua.applista.activity.model.NewItemActivityViewModel;
 
 public class NewItemActivity extends AppCompatActivity {
 
@@ -26,6 +29,12 @@ public class NewItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
 
+        NewItemActivityViewModel vm =  new ViewModelProvider(this).get(NewItemActivityViewModel.class);
+        Uri selectPhotoLocation = vm.getSelectedPhotoLocation();
+        if (selectPhotoLocation != null){
+            ImageView imvPhotoPreview = findViewById(R.id.imvPhotoPreview);
+            imvPhotoPreview.setImageURI(selectPhotoLocation);
+        }
         ImageButton ImgCI = findViewById(R.id.imbCI);
         ImgCI.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,9 +81,12 @@ public class NewItemActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==PHOTO_PICKER_REQUEST){
             if(resultCode== Activity.RESULT_OK){
-                photoSelected = data.getData();
-                ImageView imvfotoPreview = findViewById(R.id.imvPhotoPreview);
-                imvfotoPreview.setImageURI(photoSelected);
+                Uri photoSelected = data.getData();
+                ImageView imvPhotoPreview = findViewById(R.id.imvPhotoPreview);
+                imvPhotoPreview.setImageURI(photoSelected);
+
+                NewItemActivityViewModel vm = new ViewModelProvider(this).get(NewItemActivityViewModel.class);
+                vm.setSelectedPhotoLocation(photoSelected);
             }
         }
     }
