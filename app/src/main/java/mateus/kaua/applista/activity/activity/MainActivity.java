@@ -28,8 +28,8 @@ import mateus.kaua.applista.activity.util.Util;
 
 public class MainActivity extends AppCompatActivity {
     static int NEW_ITEM_REQUEST=1;
+    //declarando um arquivo de adaptação
     MyAdapter myAdapter;
-    /*List<MyItem> itens = new ArrayList<>();*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,20 +40,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,NewItemActivity.class);
+                //inicia um requisição que espera ser solucionada pela nova activity
                 startActivityForResult(i,NEW_ITEM_REQUEST);
             }
         });
-        /*passo 12*/
+        //passo 12 administrando o recicler view
 
         RecyclerView rvItens = findViewById(R.id.rvItens);
+        //adicionando o view model para salvar os dados
         MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        //intermediando por uma lista os dados
         List<MyItem> itens = vm.getItens();
+        //associando o adapter
         myAdapter = new MyAdapter(this,itens);
         rvItens.setAdapter(myAdapter);
+        //declaro que o elemento é fixo
         rvItens.setHasFixedSize(true);
 
+        //inicio um novo gerenciador de layout
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvItens.setLayoutManager(layoutManager);
+        //defino a divisão decorativa dos itens
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvItens.getContext(),DividerItemDecoration.VERTICAL);
         rvItens.addItemDecoration(dividerItemDecoration);
     }
@@ -65,17 +72,20 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         if (requestCode==NEW_ITEM_REQUEST){
             if (resultCode== Activity.RESULT_OK){
+                //intermediando por uma lista os dados
                 MyItem myItem = new MyItem();
                 myItem.title = data.getStringExtra("title");
                 myItem.description = data.getStringExtra("description");
                 Uri selectedPhotoURI = data.getData();
                 try {
+                    //utilizo o bitmap para não depender de acesso aos arquivos do dispositivo
                     Bitmap photo = Util.getBitmap(MainActivity.this,selectedPhotoURI,100,100);
                     myItem.photo = photo;
                 }catch (FileNotFoundException e){
                     e.printStackTrace();
                 }
                 MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
+                //pegando os itens da lista auxiliar
                 List<MyItem> itens = vm.getItens();
                 itens.add(myItem);
                 myAdapter.notifyItemInserted(itens.size()-1);

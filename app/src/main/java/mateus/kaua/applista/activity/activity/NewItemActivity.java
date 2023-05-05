@@ -21,16 +21,19 @@ import mateus.kaua.applista.activity.model.NewItemActivityViewModel;
 
 public class NewItemActivity extends AppCompatActivity {
 
+    //declaro um valor inicial a requisição
     static int PHOTO_PICKER_REQUEST = 1;
-    /*Uri photoSelected = null;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
 
+        //declarando viewModel
         NewItemActivityViewModel vm =  new ViewModelProvider(this).get(NewItemActivityViewModel.class);
+        //pegando o uri
         Uri selectPhotoLocation = vm.getSelectedPhotoLocation();
+        //verificando se o endereço não esta vazio
         if (selectPhotoLocation != null){
             ImageView imvPhotoPreview = findViewById(R.id.imvPhotoPreview);
             imvPhotoPreview.setImageURI(selectPhotoLocation);
@@ -39,6 +42,7 @@ public class NewItemActivity extends AppCompatActivity {
         ImgCI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //iniciando uma intenção e uma requisição
                 Intent photoPickerIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent,PHOTO_PICKER_REQUEST);

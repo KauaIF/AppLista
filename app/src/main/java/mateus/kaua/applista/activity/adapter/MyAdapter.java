@@ -17,8 +17,10 @@ import mateus.kaua.applista.activity.model.MyItem;
 
 public class MyAdapter extends RecyclerView.Adapter {
     MainActivity mainActivity;
+    //usando uma lista para auxiliar a tratar os dados
     List<MyItem> itens;
 
+    //declarando adaptador
     public MyAdapter(MainActivity mainActivity,List<MyItem> itens){
         this.mainActivity = mainActivity;
         this.itens = itens;
